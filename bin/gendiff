@@ -10,12 +10,19 @@ if (file_exists($autoloadPath1)) {
     require_once $autoloadPath2;
 }
 
-echo ("Generate diff\n");
+$doc = <<<DOC
+Generate diff
 
-echo ("Usage:\n");
-echo ("gendiff (-h|--help)\n");
-echo ("gendiff (-v|--version)\n");
+Usage:
+    gendiff (-h|--help)
+    gendiff (-v|--version)
+    gendiff [--format <fmt>] <firstFile> <secondFile>
 
-echo ("Options:\n");
-echo ("-h --help                 Show this screen\n");
-echo ("-v --version              Show version\n");
+Options:
+    -h --help                   Show this screen
+    -v --version                Show version
+DOC;
+
+$args = Docopt::handle($doc, array('version'=> 'GenDiff 1.0'));
+foreach ($args as $k=>$v);
+echo $k.': '.json_encode($v).PHP_EOL;

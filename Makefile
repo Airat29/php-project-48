@@ -1,6 +1,6 @@
 install:
 		composer install
-gendiff -h:
+gendiff:
 		./bin/gendiff
 validate:
 		composer validate

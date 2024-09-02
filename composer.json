@@ -1,8 +1,8 @@
 {
     "name": "hexlet/code",
-    "bin": [
-        "bin/gendiff"
-    ],
+    "bin": ["bin/gendiff"],
+    "description": "stable",
+    "type": "project",
     "autoload": {
         "psr-4": {
             "Hexlet\\Code\\": "src/"
@@ -10,8 +10,10 @@
     },
     "authors": [
         {
-            "name": "Airat29",
-            "email": "fat.airat@rambler.ru"
+            "name": "Airat29"
         }
-    ]
+    ],
+    "require": {
+        "docopt/docopt": "^1.0"
+    }
 }
