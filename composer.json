@@ -1,17 +1,14 @@
 {
     "name": "hexlet/code",
-    "bin": ["bin/gendiff"],
-    "description": "stable",
-    "type": "project",
-    "autoload": {
-        "psr-4": {
-            "Hexlet\\Code\\": "src/"
-        }
-    },
+    "description": "Calculator",
+    "license": "proprietary",
     "authors": [
         {
-            "name": "Airat29"
+            "name": "Airat"
         }
+    ],
+    "bin": [ 
+        "bin/gendiff"
     ],
     "require": {
         "docopt/docopt": "^1.0"
