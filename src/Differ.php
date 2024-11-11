@@ -2,18 +2,36 @@
 
 namespace Php\Project\Differ;
 
-use function Functional\sort;
+use function Php\Project\Differ\Parser\parse;
+use function Php\Project\Differ\Render\render;
 
-function genDiff(string $filePath1, string $filePath2)
+function genDiff(string $filePath1,string $filePath2, $format = "stylish")
+{
+    $firstArray = parse($filePath1);
+    $secondArray = parse($filePath2);
+    $diff = makeDiff($firstArray, $secondArray);
+    return render($diff, $format);
+}
+
+function makeDiff(array $beforeDiff,array $afterDiff)
+{
+    $combinedKeys = array_unique(array_merge(array_keys($beforeDiff), array_keys($afterDiff)));
+    $sortedCombinedKeys = sort($combinedKeys);
+    return array_map(function ($key) use ($beforeDiff, $afterDiff) {
+        
+    });
+}
+
+
+function genDiff(string $filePath1,string $filePath2, )
 {
     $fileData1 = json_decode(file_get_contents($filePath1), true);
     $fileData2 = json_decode(file_get_contents($filePath2), true);
 
-    $keys = array_unique(array_merge(array_keys($fileData1), array_keys($fileData2))); //находим все ключи
+    $keys = array_unique(array_merge(array_keys($fileData1), array_keys($fileData2)));
 
-    $sortedKeys = sort($keys, fn ($left, $right) => strcmp($left, $right)); // сортируем ключи по алфавиту
+    $sortedKeys = sort($keys, fn ($left, $right) => strcmp($left, $right));
 
-    //print_r ($sortedKeys);
     $diff = array_map(function ($key) use ($fileData1, $fileData2) {
         if (array_key_exists($key, $fileData1) && array_key_exists($key, $fileData2)) {
             if ($fileData1[$key] === $fileData2[$key]) {
@@ -28,4 +46,5 @@ function genDiff(string $filePath1, string $filePath2)
         }
     }, $sortedKeys);
     echo "{\n" . implode("\n", $diff) . "\n}\n";
+    return $diff;
 }
