@@ -3,12 +3,12 @@
 namespace Php\Project\src\Differ;
 
 use function Functional\sort;
-use function Php\Project\src\Parcer\parceFile;
+use function Php\Project\src\Parsers\parseFile;
 
 function genDiff(string $file1, string $file2)
 {
-    $fileData1 = parceFile($file1);
-    $fileData2 = parceFile($file2);
+    $fileData1 = (array) parseFile($file1);
+    $fileData2 = (array) parseFile($file2);
 
     $keys = array_unique(array_merge(array_keys($fileData1), array_keys($fileData2)));
 
