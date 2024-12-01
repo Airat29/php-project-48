@@ -30,5 +30,6 @@ foreach ($args as $k=>$v)
     echo $k.': '.json_encode($v).PHP_EOL;
 $file1 = $args->args['<firstFile>'];
 $file2 = $args->args['<secondFile>'];
-$diff = genDiff($file1, $file2);
+$format = $args->args['--format'];
+$diff = genDiff($file1, $file2, $format);
 print_r($diff);

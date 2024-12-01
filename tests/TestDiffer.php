@@ -8,31 +8,62 @@ use function Php\Project\src\Differ\genDiff;
 
 class TestDiffer extends TestCase
 {
-    public function testGendiff(): void
+    private string $fixturePath = __DIR__ . '/fixtures';
+
+    private function getExpectedPath(string $formatter): string
     {
-        $expected = '{
-  - follow: false
-    host: hexlet.io
-  - proxy: 123.234.53.22
-  - timeout: 50
-  + timeout: 20
-  + verbose: true
-}';
-        $this->assertEquals($expected, genDiff('tests/fixtures/file1.json', 'tests/fixtures/file2.json'));
+      return "{$this->fixturePath}/{$formatter}-expected.txt";
     }
 
-    public function testFlatFileComparison()
+    private function getFirstFilePath(string $fileType): string
     {
-        $expectedDiff = '{
-  - follow: false
-    host: hexlet.io
-  - proxy: 123.234.53.22
-  - timeout: 50
-  + timeout: 20
-  + verbose: true
-}';
+      return "{$this->fixturePath}/file1.{$fileType}";
+    }
 
-        $actualDiff = genDiff('tests/fixtures/file1.yml', 'tests/fixtures/file2.yml');
-        $this->assertEquals($expectedDiff, $actualDiff);
+    private function getSecondFilePath(string $fileType): string
+    {
+      return "{$this->fixturePath}/file2.{$fileType}";
+    }
+
+    public function testDiff(
+      string $formatter,
+      string $firstFileType,
+      string $secondFileType
+    ): void {
+      $diff = genDiff($this->getFirstFilePath($firstFileType), $this->getSecondFilePath($secondFileType), $formatter);
+
+      $this->assertStringEqualsFile($this->getExpectedPath($formatter), $diff);    
+    }
+
+
+    public function dataProvider(): array
+    {
+      return [
+        'stylish format, json - json' => [
+          'stylish',
+          'json',
+          'json',
+        ],
+        'stylish format, yaml - json' => [
+          'stylish',
+          'yaml',
+          'json'
+        ],
+        'plain format, yaml - yml' => [
+          'plain',
+          'yaml',
+          'yml',
+        ],
+        'json format, json - json' => [
+          'json',
+          'json',
+          'json',
+        ],
+        'json format, yaml - yml' => [
+          'json',
+          'yaml',
+          'yml',
+        ],
+      ];
     }
 }

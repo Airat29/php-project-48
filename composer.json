@@ -1,7 +1,8 @@
 {
     "name": "hexlet/code",
     "description": "Calculator",
-    "license": "proprietary",
+    "type": "Library",
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "Hexlet\\Code\\": "src/"
